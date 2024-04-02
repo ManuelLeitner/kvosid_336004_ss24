@@ -1,4 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
+v {xschem version=3.4.4 file_version=1.2
 }
 G {}
 K {}
@@ -145,8 +145,8 @@ value="
 .save all
 .control
 set doAmpSim = 1
+set doNoise = 0
 
-if $doAmpSim eq 1
 	setplot const
 	let f_min = 10
 	let f_max = 1G
@@ -168,11 +168,8 @@ if $doAmpSim eq 1
 	alter @VIN[DC] = 0.0
 	alter @VIN[PULSE] = [ 0 $&v_step_i $&t_delay $&t_rf $&t_rf $&t_step $&t_per 0 ]
 
+if $doAmpSim eq 1
 	ac dec 100 $&const.f_min $&const.f_max
-
-	noise v(vout) vin dec 100 $&const.f_min $&const.f_max
-
-	tran $&tstep $&tstop $&tstart
 
 	setplot ac1
 	let Atot = v(vout)/v(vid)		
@@ -200,6 +197,14 @@ if $doAmpSim eq 1
 	print err_gain*100
 
 	plot Amag_ol_dB Aarg_ol ylabel 'Open Loop Magnitude, Phase'
+
+end
+
+if $doNoise eq 1
+
+	noise v(vout) vin dec 100 $&const.f_min $&const.f_max
+
+	tran $&tstep $&tstop $&tstart
 
 	setplot noise1
 	let acgain = onoise_spectrum/inoise_spectrum
