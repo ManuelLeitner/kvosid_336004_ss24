@@ -169,6 +169,19 @@ set doNoise = 0
 	alter @VIN[PULSE] = [ 0 $&v_step_i $&t_delay $&t_rf $&t_rf $&t_step $&t_per 0 ]
 
 if $doAmpSim eq 1
+
+alter @m.xamp1.xmn1.msky130_fd_pr__nfet_01v8[nf] = 4 # load N
+alter @m.xamp1.xmn2.msky130_fd_pr__nfet_01v8[nf] = @m.xamp1.xmn1.msky130_fd_pr__nfet_01v8[nf]
+
+alter @m.xamp1.xmp4.msky130_fd_pr__pfet_01v8[nf] = 50 # diffpair P
+alter @m.xamp1.xmp5.msky130_fd_pr__pfet_01v8[nf] = @m.xamp1.xmp4.msky130_fd_pr__pfet_01v8[nf]
+
+alter @m.xamp1.xmp6.msky130_fd_pr__pfet_01v8[nf] = 1 # load P
+alter @m.xamp1.xmp7.msky130_fd_pr__pfet_01v8[nf] = @m.xamp1.xmp6.msky130_fd_pr__pfet_01v8[nf]
+
+alter @m.xamp1.xmn3.msky130_fd_pr__nfet_01v8[nf] = 1 # cs stage N
+alter @m.xamp1.xmn4.msky130_fd_pr__nfet_01v8[nf] = @m.xamp1.xmn3.msky130_fd_pr__nfet_01v8[nf]
+
 	ac dec 100 $&const.f_min $&const.f_max
 
 	setplot ac1
@@ -187,16 +200,16 @@ if $doAmpSim eq 1
 	let Amag_fc = Adc_ol_dB-3
 
 	meas ac fc find frequency when Amag_ol_dB = Amag_fc
-	meas ac fug_ol find frequency when Amag_ol_dB=0
-	meas ac pm find Aarg_ol when frequency=fug_ol
-	let pm = 180 + pm
-	print pm
+#	meas ac fug_ol find frequency when Amag_ol_dB=0
+#	meas ac pm find Aarg_ol when frequency=fug_ol
+#	let pm = 180 + pm
+#	print pm
 
 	let Adc_ol_lin = 10^(Adc_ol_dB/20)
 	let err_gain = 1-Adc_ol_lin/(1+Adc_ol_lin)
-	print err_gain*100
+#	print err_gain*100
 
-	plot Amag_ol_dB Aarg_ol ylabel 'Open Loop Magnitude, Phase'
+#	plot Amag_ol_dB Aarg_ol ylabel 'Open Loop Magnitude, Phase'
 
 end
 
