@@ -145,10 +145,10 @@ value="
 .save all
 .control
 set doAmpSim = 1
-set doNoise = 0
+set doNoise = 1
 
 	setplot const
-	let f_min = 10
+	let f_min = 100
 	let f_max = 1G
 	let f_stop = 500k
 
@@ -200,16 +200,16 @@ alter @m.xamp1.xmn4.msky130_fd_pr__nfet_01v8[nf] = @m.xamp1.xmn3.msky130_fd_pr__
 	let Amag_fc = Adc_ol_dB-3
 
 	meas ac fc find frequency when Amag_ol_dB = Amag_fc
-#	meas ac fug_ol find frequency when Amag_ol_dB=0
-#	meas ac pm find Aarg_ol when frequency=fug_ol
-#	let pm = 180 + pm
-#	print pm
+	meas ac fug_ol find frequency when Amag_ol_dB=0
+	meas ac pm find Aarg_ol when frequency=fug_ol
+	let pm = 180 + pm
+	print pm
 
 	let Adc_ol_lin = 10^(Adc_ol_dB/20)
 	let err_gain = 1-Adc_ol_lin/(1+Adc_ol_lin)
-#	print err_gain*100
+	print err_gain*100
 
-#	plot Amag_ol_dB Aarg_ol ylabel 'Open Loop Magnitude, Phase'
+	plot Amag_ol_dB Aarg_ol ylabel 'Open Loop Magnitude, Phase'
 
 end
 
