@@ -1,4 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
+v {xschem version=3.4.4 file_version=1.2
 }
 G {}
 K {}
@@ -757,5 +757,5 @@ spiceprefix=X
 mult=1}
 C {/foss/designs/xschem/rstring_cm.sym} 1280 -410 2 0 {name=xr1}
 C {/foss/designs/xschem/rstring_cm.sym} 1560 -650 0 0 {name=xr2}
-C {sky130_fd_pr/cap_mim_m3_1.sym} 1490 -520 3 0 {name=C6 model=cap_mim_m3_1 W=5 L=5 MF=16 spiceprefix=X}
-C {sky130_fd_pr/cap_mim_m3_1.sym} 1730 -520 3 0 {name=C7 model=cap_mim_m3_1 W=5 L=5 MF=16 spiceprefix=X}
+C {sky130_fd_pr/cap_mim_m3_1.sym} 1490 -520 3 0 {name=C6 model=cap_mim_m3_1 W=5 L=5 MF=8 spiceprefix=X}
+C {sky130_fd_pr/cap_mim_m3_1.sym} 1730 -520 3 0 {name=C7 model=cap_mim_m3_1 W=5 L=5 MF=8 spiceprefix=X}

@@ -1,4 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
+v {xschem version=3.4.4 file_version=1.2
 }
 G {}
 K {}
@@ -144,11 +144,14 @@ value="
 
 .save all
 .control
-set doAmpSim = 1
 
-if $doAmpSim eq 1
+op
+
+set doAmpSim = 1
+set doNoise = 1
+
 	setplot const
-	let f_min = 10
+	let f_min = 100
 	let f_max = 1G
 	let f_stop = 500k
 
@@ -168,11 +171,8 @@ if $doAmpSim eq 1
 	alter @VIN[DC] = 0.0
 	alter @VIN[PULSE] = [ 0 $&v_step_i $&t_delay $&t_rf $&t_rf $&t_step $&t_per 0 ]
 
+if $doAmpSim eq 1
 	ac dec 100 $&const.f_min $&const.f_max
-
-	noise v(vout) vin dec 100 $&const.f_min $&const.f_max
-
-	tran $&tstep $&tstop $&tstart
 
 	setplot ac1
 	let Atot = v(vout)/v(vid)		
@@ -200,6 +200,14 @@ if $doAmpSim eq 1
 	print err_gain*100
 
 	plot Amag_ol_dB Aarg_ol ylabel 'Open Loop Magnitude, Phase'
+
+end
+
+if $doNoise eq 1
+
+	noise v(vout) vin dec 100 $&const.f_min $&const.f_max
+
+	tran $&tstep $&tstop $&tstart
 
 	setplot noise1
 	let acgain = onoise_spectrum/inoise_spectrum
@@ -322,9 +330,6 @@ C {devices/lab_pin.sym} 520 -300 1 0 {name=p61 sig_type=std_logic lab=di_pon}
 C {devices/title.sym} 200 -80 0 0 {name=l3 author="Michael Koefinger"}
 C {devices/gnd.sym} 920 -440 0 0 {name=l5 lab=GND}
 C {devices/vdd.sym} 920 -710 0 0 {name=l6 lab=VDD}
-C {devices/launcher.sym} 130 -130 0 0 {name=h1
-descr="Annotate OP"
-tclcommand="set show_hidden_texts 1; xschem annotate_op"}
 C {devices/ngspice_get_value.sym} 1395 -745 0 0 {name=r10 node=v(@m.xamp1.xmp2.msky130_fd_pr__pfet_01v8[vth])
 descr="vth"}
 C {devices/ngspice_get_value.sym} 1460 -745 0 0 {name=r20 node=v(@m.xamp1.xmp2.msky130_fd_pr__pfet_01v8[vgs])
@@ -406,3 +411,6 @@ C {devices/lab_pin.sym} 1180 -540 2 0 {name=l8 sig_type=std_logic lab=voutp
 C {devices/lab_pin.sym} 1180 -620 0 1 {name=l9 sig_type=std_logic lab=voutn
 }
 C {devices/lab_pin.sym} 860 -330 0 1 {name=p2 sig_type=std_logic lab=vout}
+C {devices/launcher.sym} 130 -130 0 0 {name=h2
+descr="Annotate OP"
+tclcommand="set show_hidden_texts 1; xschem annotate_op"}
