@@ -150,26 +150,26 @@ op
 set doAmpSim = 1
 set doNoise = 1
 
-	setplot const
-	let f_min = 100
-	let f_max = 1G
-	let f_stop = 500k
+setplot const
+let f_min = 100
+let f_max = 1G
+let f_stop = 500k
 
-	let Adc = 220
-	let v_step_o = 0.9
-	let v_step_i = -v_step_o/Adc
+let Adc = 220
+let v_step_o = 0.9
+let v_step_i = -v_step_o/Adc
 
-	let t_rf = 0.01u
-	let t_step = 5u
-	let t_delay = 0
-	let t_per = 2*t_step
+let t_rf = 0.01u
+let t_step = 5u
+let t_delay = 0
+let t_per = 2*t_step
 
-	let tstep = 0.001*t_step
-	let tstop = 2*t_per
-	let tstart = t_delay
+let tstep = 0.001*t_step
+let tstop = 2*t_per
+let tstart = t_delay
 
-	alter @VIN[DC] = 0.0
-	alter @VIN[PULSE] = [ 0 $&v_step_i $&t_delay $&t_rf $&t_rf $&t_step $&t_per 0 ]
+alter @VIN[DC] = 0.0
+alter @VIN[PULSE] = [ 0 $&v_step_i $&t_delay $&t_rf $&t_rf $&t_step $&t_per 0 ]
 
 if $doAmpSim eq 1
 	ac dec 100 $&const.f_min $&const.f_max
@@ -213,6 +213,8 @@ if $doNoise eq 1
 	let acgain = onoise_spectrum/inoise_spectrum
 	plot onoise_spectrum ylog xlog ylabel 'Output Noise'
 	*plot acgain
+	print onoise_total
+	print inoise_total
 
 	setplot noise2
 	print onoise_total
