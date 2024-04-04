@@ -1,4 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
+v {xschem version=3.4.4 file_version=1.2
 }
 G {}
 K {}
@@ -575,7 +575,7 @@ C {sky130_fd_pr/cap_mim_m3_1.sym} 1300 -810 0 0 {name=C5 model=cap_mim_m3_1 W=5 
 C {sky130_fd_pr/pfet_01v8_nf.sym} 1050 -580 0 0 {name=MP4
 L=0.15
 W=5
-nf=70
+nf=90
 mult=1
 ad="'int((nf+1)/2) * W / nf * 0.29'"
 pd="'2*int((nf+1)/2) * (W / nf + 0.29)'"
@@ -589,7 +589,7 @@ spiceprefix=X
 C {sky130_fd_pr/pfet_01v8_nf.sym} 1270 -580 0 1 {name=MP5
 L=0.15
 W=5
-nf=70
+nf=90
 mult=1
 ad="'int((nf+1)/2) * W / nf * 0.29'"
 pd="'2*int((nf+1)/2) * (W / nf + 0.29)'"
@@ -601,9 +601,9 @@ model=pfet_01v8
 spiceprefix=X
 }
 C {sky130_fd_pr/nfet_01v8_nf.sym} 1090 -290 0 1 {name=MN1
-L=1
+L=0.15
 W=3
-nf=6
+nf=4
 mult=1
 ad="'int((nf+1)/2) * W / nf * 0.29'" 
 pd="'2*int((nf+1)/2) * (W / nf + 0.29)'"
@@ -615,9 +615,9 @@ model=nfet_01v8
 spiceprefix=X
 }
 C {sky130_fd_pr/nfet_01v8_nf.sym} 1230 -290 0 0 {name=MN2
-L=1
+L=0.15
 W=3
-nf=6
+nf=4
 mult=1
 ad="'int((nf+1)/2) * W / nf * 0.29'" 
 pd="'2*int((nf+1)/2) * (W / nf + 0.29)'"
@@ -636,7 +636,7 @@ C {devices/opin.sym} 1500 -680 0 1 {name=p7 lab=VO_N}
 C {sky130_fd_pr/nfet_01v8_nf.sym} 1540 -450 0 0 {name=MN3
 L=0.5
 W=3
-nf=20
+nf=9
 mult=1
 ad="'int((nf+1)/2) * W / nf * 0.29'" 
 pd="'2*int((nf+1)/2) * (W / nf + 0.29)'"
@@ -650,7 +650,7 @@ spiceprefix=X
 C {sky130_fd_pr/nfet_01v8_nf.sym} 1780 -450 0 0 {name=MN4
 L=0.5
 W=3
-nf=20
+nf=9
 mult=1
 ad="'int((nf+1)/2) * W / nf * 0.29'" 
 pd="'2*int((nf+1)/2) * (W / nf + 0.29)'"
@@ -677,8 +677,8 @@ spiceprefix=X
 }
 C {sky130_fd_pr/pfet_01v8_nf.sym} 1780 -750 0 0 {name=MP6
 L=0.5
-W=5
-nf=5
+W=3
+nf=10
 mult=1
 ad="'int((nf+1)/2) * W / nf * 0.29'"
 pd="'2*int((nf+1)/2) * (W / nf + 0.29)'"
@@ -691,8 +691,8 @@ spiceprefix=X
 }
 C {sky130_fd_pr/pfet_01v8_nf.sym} 1580 -750 0 1 {name=MP7
 L=0.5
-W=5
-nf=5
+W=3
+nf=10
 mult=1
 ad="'int((nf+1)/2) * W / nf * 0.29'"
 pd="'2*int((nf+1)/2) * (W / nf + 0.29)'"

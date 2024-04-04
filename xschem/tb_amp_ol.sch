@@ -1,4 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
+v {xschem version=3.4.4 file_version=1.2
 }
 G {}
 K {}
@@ -145,10 +145,10 @@ value="
 .save all
 .control
 set doAmpSim = 1
+set doNoise = 1
 
-if $doAmpSim eq 1
 	setplot const
-	let f_min = 10
+	let f_min = 100
 	let f_max = 1G
 	let f_stop = 500k
 
@@ -168,11 +168,21 @@ if $doAmpSim eq 1
 	alter @VIN[DC] = 0.0
 	alter @VIN[PULSE] = [ 0 $&v_step_i $&t_delay $&t_rf $&t_rf $&t_step $&t_per 0 ]
 
+if $doAmpSim eq 1
+
+alter @m.xamp1.xmn1.msky130_fd_pr__nfet_01v8[nf] = 4 # load N
+alter @m.xamp1.xmn2.msky130_fd_pr__nfet_01v8[nf] = @m.xamp1.xmn1.msky130_fd_pr__nfet_01v8[nf]
+
+alter @m.xamp1.xmp4.msky130_fd_pr__pfet_01v8[nf] = 50 # diffpair P
+alter @m.xamp1.xmp5.msky130_fd_pr__pfet_01v8[nf] = @m.xamp1.xmp4.msky130_fd_pr__pfet_01v8[nf]
+
+alter @m.xamp1.xmp6.msky130_fd_pr__pfet_01v8[nf] = 1 # load P
+alter @m.xamp1.xmp7.msky130_fd_pr__pfet_01v8[nf] = @m.xamp1.xmp6.msky130_fd_pr__pfet_01v8[nf]
+
+alter @m.xamp1.xmn3.msky130_fd_pr__nfet_01v8[nf] = 1 # cs stage N
+alter @m.xamp1.xmn4.msky130_fd_pr__nfet_01v8[nf] = @m.xamp1.xmn3.msky130_fd_pr__nfet_01v8[nf]
+
 	ac dec 100 $&const.f_min $&const.f_max
-
-	noise v(vout) vin dec 100 $&const.f_min $&const.f_max
-
-	tran $&tstep $&tstop $&tstart
 
 	setplot ac1
 	let Atot = v(vout)/v(vid)		
@@ -200,6 +210,14 @@ if $doAmpSim eq 1
 	print err_gain*100
 
 	plot Amag_ol_dB Aarg_ol ylabel 'Open Loop Magnitude, Phase'
+
+end
+
+if $doNoise eq 1
+
+	noise v(vout) vin dec 100 $&const.f_min $&const.f_max
+
+	tran $&tstep $&tstop $&tstart
 
 	setplot noise1
 	let acgain = onoise_spectrum/inoise_spectrum

@@ -1,4 +1,4 @@
-v {xschem version=3.4.5 file_version=1.2
+v {xschem version=3.4.4 file_version=1.2
 }
 G {}
 K {}
@@ -360,7 +360,7 @@ C {devices/vsource.sym} 640 -600 3 0 {name=VIINP value=0
 C {devices/vsource.sym} 640 -520 3 0 {name=VIINN value=0
 }
 C {devices/res.sym} 760 -610 3 0 {name=R1
-value=650k
+value=9k
 footprint=1206
 device=resistor
 m=1}
@@ -368,58 +368,58 @@ C {devices/lab_pin.sym} 930 -170 2 1 {name=l5 sig_type=std_logic lab=voutn1}
 C {devices/lab_pin.sym} 930 -210 0 0 {name=l6 sig_type=std_logic lab=voutp1
 }
 C {devices/res.sym} 840 -680 0 0 {name=R2
-value=1.3Meg
+value=87k
 footprint=1206
 device=resistor
 m=1}
 C {devices/res.sym} 910 -610 3 0 {name=R3
-value=100k
+value=16k
 footprint=1206
 device=resistor
 m=1}
 C {devices/capa.sym} 840 -560 0 0 {name=C1
 m=1
-value=10p
+value=30p
 footprint=1206
 device="ceramic capacitor"}
 C {devices/capa.sym} 1640 -560 0 0 {name=C3
 m=1
-value=1p
+value=1.2p
 footprint=1206
 device="ceramic capacitor"}
 C {devices/res.sym} 760 -510 3 0 {name=R11
-value=650k
+value=9k
 footprint=1206
 device=resistor
 m=1}
 C {devices/res.sym} 840 -440 0 0 {name=R21
-value=1.3Meg
+value=87k
 footprint=1206
 device=resistor
 m=1}
 C {devices/res.sym} 910 -510 3 0 {name=R31
-value=100k
+value=16k
 footprint=1206
 device=resistor
 m=1}
 C {devices/capa.sym} 980 -440 0 0 {name=C21
 m=1
-value=1p
+value=0.6p
 footprint=1206
 device="ceramic capacitor"}
 C {devices/res.sym} 1570 -600 3 0 {name=R4
-value=800k
+value=133k
 footprint=1206
 device=resistor
 m=1}
 C {devices/res.sym} 1570 -520 3 0 {name=R41
-value=800k
+value=133k
 footprint=1206
 device=resistor
 m=1}
 C {devices/capa.sym} 980 -680 0 0 {name=C2
 m=1
-value=1p
+value=0.6p
 footprint=1206
 device="ceramic capacitor"}
 C {devices/lab_pin.sym} 1430 -440 2 0 {name=l10 sig_type=std_logic lab=voutp1
