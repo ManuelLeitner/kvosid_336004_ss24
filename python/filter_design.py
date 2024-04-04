@@ -110,17 +110,33 @@ def adc_noise_spec(nbits=8, vref=0.9, vmax_pp=0.9, noise_margin_db=10, fmin=10e3
     return {'vno_density': vonoise_density, 'vnq_int': vqnoise, 'vno_int': vonoise, 'vlsb': vlsb}
 
 
+def plot_bounds(wvec, a_pass_ripple_db, a_pass_db, a_stop_db, f_pass, f_stop):
+
+    ax = plt.gcf().get_axes()[0]
+    col = 'red'
+    ax.vlines(x=f_pass, ymin=0, ymax=a_pass_db, colors=col)
+    ax.hlines(y=a_pass_db, xmin=wvec[0]/2/pi, xmax=f_pass, colors=col)
+
+    ax.vlines(x=f_stop, ymin=a_pass_db-a_stop_db, ymax=a_pass_db+a_pass_ripple_db, colors=col)
+    ax.hlines(y=a_pass_db+a_pass_ripple_db, xmin=wvec[0]/2/pi, xmax=f_stop, colors=col)
+    ax.hlines(y=a_pass_db-a_stop_db, xmin=f_stop, xmax=wvec[-1]/2/pi, colors=col)
+
+
 def main():
     # Define Filter Specs
     area_max_umsq = (100e-6 * 200e-6) / 1e-12   # max available chip area
 
+    f_pass_limit =1e6
+    a_pass_db_limit =20
+
     osr = 10                                    # oversampling ratio
-    f_pass = 100e3                               # -3dB corner frequency
+    f_pass = 1.5e6                                  # -3dB corner frequency
     f_s = f_pass*osr                              # sampling frequency of the ADC
     f_stop = f_s / 2                              # start of stop band for filter approx.
-    a_pass_db = 6.02                             # Pass-band gain
+    a_pass_db = 21.5                                # Pass-band gain
     a_pass = 10 ** (a_pass_db / 20.0)
-    a_stop_db = 50                               # Stop-band attenuation, only used by iirfilter() for Chebychev approx.
+    a_pass_ripple_db = 3
+    a_stop_db = 26                               # Stop-band attenuation, only used by iirfilter() for Chebychev approx.
     filter_approx = 'butter'                    # Select Butterworth low-pass approximation
     filter_type = 'low'                         # Select low-pass filter
     filter_ord = 3                              # Limit order of the filter prototype
@@ -170,6 +186,7 @@ def main():
     plt.show(block=False)
     plt.figure(5)
     bode(sys_biquad1, wvec, Hz=True)
+    plot_bounds(wvec, a_pass_ripple_db, a_pass_db_limit, a_stop_db, f_pass_limit, f_stop)
     # plt.title('Bode Plot of 1. Biquad')
     plt.show(block=False)
 
@@ -181,7 +198,7 @@ def main():
     print("fp = %0.2f" % (2 * pi * wp / 1e3), "kHz")
     print("Qp = %0.2f" % qp)
 
-    C1, C2, R1, R2, R3 = calc_rc_mfb_biquad(a_pass, wp, qp, k_c=20, c2=1e-12, use_a=True)
+    C1, C2, R1, R2, R3 = calc_rc_mfb_biquad(a_pass, wp, qp, k_c=52, c2=0.6e-12, use_a=True)
     print("R1 = %.3f" % (R1 / 1e6), "MOhm")
     print("R2 = %.3f" % (R2 / 1e6), "MOhm")
     print("R3 = %.3f" % (R3 / 1e6), "MOhm")
@@ -209,6 +226,7 @@ def main():
     plt.show(block=False)
     plt.figure(7)
     bode(sys_biquad2, wvec, Hz=True)
+    plot_bounds(wvec, a_pass_ripple_db, a_pass_db_limit, a_stop_db, f_pass_limit, f_stop)
     #plt.title('Bode Plot of Passive RC Section')
     plt.show(block=False)
 
@@ -231,6 +249,7 @@ def main():
     plt.show(block=False)
     plt.figure(9)
     bode(h_eval, wvec, Hz=True)
+    plot_bounds(wvec,a_pass_ripple_db, a_pass_db_limit, a_stop_db, f_pass_limit, f_stop)
     # plt.title('Bode Plot of Biquad Cascade (based on RC components')
     plt.show(block=False)
 
